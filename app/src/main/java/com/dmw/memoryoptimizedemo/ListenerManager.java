@@ -7,12 +7,12 @@ public class ListenerManager {
 
     private static ListenerManager sInstance;
 
+    private List<SampleListener> listeners = new ArrayList<>();
+
     private ListenerManager() {
     }
 
-    private List<SampleListener> listeners = new ArrayList<>();
-
-    public static ListenerManager getInstance() {
+    public static synchronized ListenerManager getInstance() {
         if (sInstance == null) {
             sInstance = new ListenerManager();
         }

@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class BigObject {
 
-    private String[] array = new String[10];
+    private String[] array = new String[1000];
 
-    private List<Bitmap> bitmapList = new ArrayList<>(10);
+    private List<Bitmap> bitmapList = new ArrayList<>(1000);
 
 }

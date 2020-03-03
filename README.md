@@ -1,3 +1,94 @@
+我们模拟一个内存泄漏的场景：
+
+定义一个监听接口SampleListener
+```
+interface SampleListener {
+
+    void click();
+}
+
+```
+定义一个监听管理类ListenerManager，用来添加和删除SampleListener。我们需要创建一个ListenerManager单例类。
+
+```
+public class ListenerManager {
+
+    //静态对象
+    private static ListenerManager sInstance;
+
+    private List<SampleListener> listeners = new ArrayList<>();
+
+    private ListenerManager() {
+    }
+
+    public static ListenerManager getInstance() {
+        if (sInstance == null) {
+            sInstance = new ListenerManager();
+        }
+
+        return sInstance;
+    }
+
+    public void addListener(SampleListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(SampleListener listener) {
+        listeners.remove(listener);
+    }
+}
+
+
+```
+
+然后让Activity实现SampleListener接口，在onCreate方法中注册监听。
+```
+class SecondActivity : AppCompatActivity(), SampleListener {
+
+    companion object {
+
+        val list = arrayListOf<String>()
+
+        fun launch(context: Context) {
+            val intent = Intent(context, SecondActivity::class.java)
+            context.startActivity(intent)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_second)
+        ListenerManager.getInstance().addListener(this)
+    }
+
+
+    override fun click() {
+
+    }
+
+}
+```
+多次打开SecondActivity，因为我们只注册了监听，但是没有取消注册，
+所以会导致ListenerManager类型的静态实例`sInstance`持有多个SecondActivity实例。造成内存泄漏。
+
+![step1.jpg](setp1.jpg)
+
+我们可以看到现在内存中有7个SecondActivity实例，点击SecondActivity类，查看对应的Instance View面板。
+
+![step2.jpg](setp2.png)
+
+然后我们点击一个实例对象，看看它的引用路径。
+
+![step3.jpg](setp3.jpg)
+
+我们可以看到根本原因是ListenerManager类型的静态实例`sInstance`持有多个SecondActivity实例无法释放，造成内存泄漏。
+
+关于这个引用路径怎么看，我的做法是就是从泄漏的实例开始depth=4，找到一条depth为0的路径。那么泄漏的原因就是这条路径上的对象造成的。在这里例子中就是ListenerManager类型的静态实例`sInstance`。
+
+
+### 使用LeakCanary
+
+
 使用adb命令查看应用内存信息
 ```
 adb shell dumpsys meminfo packagename
@@ -58,6 +149,12 @@ Uptime: 594249269 Realtime: 1316676869
  
 
 ```
+可以看到打印出来很多的信息，而对于我们查看Activity内存泄漏来说，只需要关注Activities和Views两个信息即可，
+在应用中存在的Activity对象有2个，存在的View对象有78个。
+
+这时候我们退出这个Activity，在用命令查看一下，可以看到应用中存在的Activity对象有0个，存在的View对象有0个。
+通过这种方式可以简单判断一个Activity是否存在内存泄漏。
+
 其中几个关键的数据：
 
 * Private（Clean和Dirty的）：应用进程单独使用的内存，代表着系统杀死你的进程后可以实际回收的内存总量。通常需要特别关注其中更为昂贵的dirty部分，它不仅只被你的进程使用而且会持续占用内存而不能被从内存中置换出存储。申请的全部Dalvik和本地heap内存都是Dirty的，和Zygote共享的Dalvik和本地heap内存也都是Dirty的。
@@ -70,4 +167,5 @@ Uptime: 594249269 Realtime: 1316676869
 
 
 参考链接：
-* [Android性能优化（三）之内存管理](https://juejin.im/post/58b18e442f301e0068028a90)
+1. [Android性能优化（三）之内存管理](https://juejin.im/post/58b18e442f301e0068028a90)
+2. [使用 Memory Profiler 查看 Java 堆和内存分配](https://developer.android.google.cn/studio/profile/memory-profiler.html)

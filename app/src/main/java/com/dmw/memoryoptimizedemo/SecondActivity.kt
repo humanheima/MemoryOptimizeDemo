@@ -8,11 +8,7 @@ import android.support.v7.app.AppCompatActivity
 
 class SecondActivity : AppCompatActivity(), SampleListener {
 
-    private val mBigObject = BigObject()
-
     companion object {
-
-        val list = arrayListOf<String>()
 
         fun launch(context: Context) {
             val intent = Intent(context, SecondActivity::class.java)
@@ -29,6 +25,11 @@ class SecondActivity : AppCompatActivity(), SampleListener {
 
     override fun click() {
 
+    }
+
+    override fun onDestroy() {
+    //    ListenerManager.getInstance().removeListener(this)
+        super.onDestroy()
     }
 
 }

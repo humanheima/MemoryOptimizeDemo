@@ -26,9 +26,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
 
-        SecondActivity.list.add("1")
-        SecondActivity.list.add("2")
-        SecondActivity.list.add("3")
     }
 
     fun onClick(view: View) {
