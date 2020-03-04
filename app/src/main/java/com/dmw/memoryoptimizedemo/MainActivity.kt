@@ -36,6 +36,9 @@ class MainActivity : AppCompatActivity() {
             R.id.btnLaunchSecond -> {
                 SecondActivity.launch(this)
             }
+            R.id.btnLaunchThird -> {
+                ThirdActivity.launch(this)
+            }
         }
     }
 
