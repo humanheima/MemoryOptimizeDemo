@@ -1,3 +1,6 @@
+### 简书对应的文章
+
+[Android 内存泄漏定位与分析](https://www.jianshu.com/p/4f51071877fe)
 Android Studio版本：3.5.1
 测试机： HUAWEI LLD-AL00(华为荣耀9青春版）Android版本9。从手机也可以看出来作者也是囊中羞涩啊，哈哈。
 
