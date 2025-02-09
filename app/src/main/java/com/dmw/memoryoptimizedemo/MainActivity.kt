@@ -33,11 +33,17 @@ class MainActivity : AppCompatActivity() {
             R.id.btnGetMemoryInfo -> {
                 getMemoryInfo()
             }
+
             R.id.btnLaunchSecond -> {
                 SecondActivity.launch(this)
             }
+
             R.id.btnLaunchThird -> {
                 ThirdActivity.launch(this)
+            }
+
+            R.id.btnTestFragmentLeak -> {
+                TestFragmentLeakActivity.launch(this)
             }
         }
     }
