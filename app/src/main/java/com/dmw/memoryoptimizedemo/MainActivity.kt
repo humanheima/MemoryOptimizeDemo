@@ -3,9 +3,9 @@ package com.dmw.memoryoptimizedemo
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 
 /**
  * Crete by dumingwei on 2019-10-08
@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         const val MB = 1024 * 1024
     }
 
+    var leakFragment :LeakFragment?=null
     private lateinit var activityManager: ActivityManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

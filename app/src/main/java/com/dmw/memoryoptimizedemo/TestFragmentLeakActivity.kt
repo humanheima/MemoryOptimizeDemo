@@ -3,8 +3,8 @@ package com.dmw.memoryoptimizedemo
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 
 
 /**
@@ -25,10 +25,12 @@ class TestFragmentLeakActivity : AppCompatActivity(), SampleListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_second)
+        setContentView(R.layout.activity_fragment_leak)
 
         val fragment = LeakFragment()
-        supportFragmentManager.beginTransaction().show(fragment).commit()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.cl_root_layout, fragment)
+            .commit()
     }
 
 

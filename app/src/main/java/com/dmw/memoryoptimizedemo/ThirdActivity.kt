@@ -3,8 +3,8 @@ package com.dmw.memoryoptimizedemo
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 
 /**
  * Crete by dumingwei on 2020-03-04
