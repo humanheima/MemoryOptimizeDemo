@@ -1,0 +1,2 @@
+com.dmw.memoryoptimizedemo:drawable/ic_launcher_foreground = 0x7f010001
+com.dmw.memoryoptimizedemo:drawable/$ic_launcher_foreground__0 = 0x7f010000

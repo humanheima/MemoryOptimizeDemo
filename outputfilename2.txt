@@ -1,0 +1,5 @@
+com.dmw.memoryoptimizedemo:color/colorPrimaryDark = 0x7f020002
+com.dmw.memoryoptimizedemo:color/colorAccent = 0x7f020000
+com.dmw.memoryoptimizedemo:drawable/ic_launcher_foreground = 0x7f010001
+com.dmw.memoryoptimizedemo:color/colorPrimary = 0x7f020001
+com.dmw.memoryoptimizedemo:drawable/$ic_launcher_foreground__0 = 0x7f010000
